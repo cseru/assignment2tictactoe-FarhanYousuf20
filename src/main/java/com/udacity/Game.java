@@ -149,8 +149,36 @@ public class Game {
      * @return String indicating the outcome of the game: "X wins" or "O wins" or "Tie" or "None"
      */
     public String checkGameWinner(char [][]grid){
-        String result = "None";
-        //Student code goes here ...
+        String result = "none";
+
+        int totalCellFill = 0;
+
+        for(int row = 0; row < 3; row++) {
+            int playerO1 = 0, playerO2 = 0;
+            int playerX1 = 0, playerX2 = 0;
+
+            for(int col = 0; col < 3; col++) {
+                if(grid[row][col] != '-') totalCellFill++;
+
+                if(grid[row][col] == 'o') playerO1++;
+                else if(grid[row][col] == 'x') playerX1++;
+                if(grid[col][row] == 'o') playerO2++;
+                else if(grid[col][row] == 'x') playerX2++;
+            }
+
+            if(playerO1 == 3 || playerO2 == 3) {
+                result = "o wins";
+                break;
+            } else if(playerX1 == 3 || playerX2 == 3) {
+                result = "x wins";
+                break;
+            }
+        }
+
+        if( (grid[0][0] == 'o' && grid[1][1] == 'o' && grid[2][2] == 'o') || (grid[0][2] == 'o' && grid[1][1] == 'o' && grid[2][0] == 'o') ) result = "o wins";
+        else if( (grid[0][0] == 'x' && grid[1][1] == 'x' && grid[2][2] == 'x') || (grid[0][2] == 'x' && grid[1][1] == 'x' && grid[2][0] == 'x') ) result = "x wins";
+
+        if(totalCellFill == 9 && result.equals("none")) result = "tie";
         return result;
     }
 
